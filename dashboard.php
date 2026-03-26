@@ -100,12 +100,32 @@ $editableExts = ['txt','php','js','css','html','htm','json','xml','md','py','sql
             <!-- Actions -->
             <div class="panel">
                 <div class="panel-title" data-i18n="actionsTitle">Actions</div>
-                <div class="btn-group">
-                    <button class="btn btn-primary btn-block" onclick="createNewFolder()">
-                        <span>📁</span><span data-i18n="newFolder">New Folder</span>
+                <div class="action-grid">
+                    <button class="action-tile action-tile--primary" onclick="createNewFolder()">
+                        <span class="action-tile-icon">📁</span>
+                        <span class="action-tile-label" data-i18n="newFolder">New Folder</span>
                     </button>
-                    <button class="btn btn-outline btn-block" onclick="refreshFiles()">
-                        <span>🔄</span><span data-i18n="refresh">Refresh</span>
+                    <button class="action-tile" onclick="document.getElementById('fileInput').click()">
+                        <span class="action-tile-icon">⬆️</span>
+                        <span class="action-tile-label" data-i18n="uploadBtn">Upload</span>
+                    </button>
+                    <button class="action-tile" onclick="toggleSelectAll(null)">
+                        <span class="action-tile-icon">☑️</span>
+                        <span class="action-tile-label" data-i18n="selectAllBtn">Select All</span>
+                    </button>
+                    <button class="action-tile" onclick="deselectAll()">
+                        <span class="action-tile-icon">✕</span>
+                        <span class="action-tile-label" data-i18n="deselectBtn">Deselect</span>
+                    </button>
+                    <?php if ($currentDir): ?>
+                    <button class="action-tile" onclick="window.location.href='dashboard.php<?php echo count($breadcrumbs) > 1 ? '?dir=' . urlencode(implode('/', array_slice(array_column($breadcrumbs, 'path'), 0, -1))) : ''; ?>'">
+                        <span class="action-tile-icon">↩️</span>
+                        <span class="action-tile-label" data-i18n="goUp">Go Up</span>
+                    </button>
+                    <?php endif; ?>
+                    <button class="action-tile" onclick="refreshFiles()">
+                        <span class="action-tile-icon">🔄</span>
+                        <span class="action-tile-label" data-i18n="refresh">Refresh</span>
                     </button>
                 </div>
             </div>

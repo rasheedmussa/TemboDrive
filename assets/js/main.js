@@ -49,6 +49,10 @@ const i18n = {
     bulkZip: '🗜️ Download ZIP',
     bulkDelete: '🗑️ Delete',
     deselectAll: '✕ Deselect',
+    uploadBtn: 'Upload',
+    selectAllBtn: 'Select All',
+    deselectBtn: 'Deselect',
+    goUp: 'Go Up',
     themeLight: 'Light',
     themeDark: 'Dark',
     deleteConfirm: 'Are you sure you want to delete this?',
@@ -127,6 +131,10 @@ const i18n = {
     bulkZip: '🗜️ Pakua ZIP',
     bulkDelete: '🗑️ Futa',
     deselectAll: '✕ Ondoa Uchaguzi',
+    uploadBtn: 'Pakia',
+    selectAllBtn: 'Chagua Yote',
+    deselectBtn: 'Ondoa',
+    goUp: 'Rudi Juu',
     themeLight: 'Mwanga',
     themeDark: 'Giza',
     deleteConfirm: 'Una uhakika unataka kufuta hii?',
@@ -379,11 +387,18 @@ function toggleSelect(checkbox, path) {
   updateBulkBar();
 }
 function toggleSelectAll(master) {
+  // When called from sidebar button, master may be null — treat as select-all
+  const check = master || { checked: true };
+  if (!master) {
+    // Sidebar "Select All" button: always select all
+    const headerCb = document.getElementById('selectAll');
+    if (headerCb) headerCb.checked = true;
+  }
   document.querySelectorAll('.file-check').forEach(cb => {
-    cb.checked = master.checked;
+    cb.checked = check.checked;
     const path = cb.closest('.file-item')?.dataset.path;
     if (path) {
-      if (master.checked) selectedFiles.add(path);
+      if (check.checked) selectedFiles.add(path);
       else selectedFiles.delete(path);
     }
   });
