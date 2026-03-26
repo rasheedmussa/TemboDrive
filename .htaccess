@@ -1,0 +1,9 @@
+# Basic security for the application
+Options -Indexes
+DirectoryIndex index.php
+
+# Prevent access to sensitive files
+<Files "config.php">
+    Order deny,allow
+    Deny from all
+</Files>
